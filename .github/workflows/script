@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Use Node.js version compatible with your dependencies
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          cd main/client
+          npm install
+
+      # Step 4: Run linting
+      - name: Lint the code
+        run: |
+          cd main/client
+          npm run lint
+
+      # Step 5: Build the project
+      - name: Build the project
+        run: |
+          cd main/client
+          npm run build
+
+      # Step 6: Optional - Run the development server
+      - name: Start development server
+        if: ${{ github.event_name == 'workflow_dispatch' }} # Only for manual trigger
+        run: |
+          cd main/client
+          npm run dev
