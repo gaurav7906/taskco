@@ -9,7 +9,7 @@ const UserContext = React.createContext();
 axios.defaults.withCredentials = true;
 
 export const UserContextProvider = ({ children }) => {
-  const serverUrl = "http://localhost:8000";
+  const serverUrl = "https://cc0b73da-ad67-4605-bf5f-7f11d0322928.e1-us-east-azure.choreoapps.dev:8000";
 
   const router = useRouter();
 
